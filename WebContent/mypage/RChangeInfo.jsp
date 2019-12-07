@@ -1,0 +1,80 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ page language="java" import="java.text.*, java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>회원정보수정</title>
+
+
+</head>
+<body>
+<%String serverIP = "155.230.36.61";
+   String strSID = "orcl";
+   String portNum = "1521";
+   String user = "s2017111978";
+   String pass = "2017111978";
+   String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
+   Connection conn = null;
+   PreparedStatement pstmt;
+   ResultSet rs;
+   Class.forName("oracle.jdbc.driver.OracleDriver");
+   conn = DriverManager.getConnection(url,user,pass);  
+   
+   String query = "SELECT * FROM ACCOUNT WHERE ID = '" + /*session.getAttribute("ID")*/ "knu" + "'";
+   pstmt = conn.prepareStatement(query);
+   rs = pstmt.executeQuery();
+   out.println("<table border=\"1\">");
+   ResultSetMetaData rsmd = rs.getMetaData();
+   int cnt = rsmd.getColumnCount();
+   
+   out.println("<th>"+rsmd.getColumnName(3)+"</th>");
+   out.println("<th>"+rsmd.getColumnName(4)+"</th>");
+   out.println("<th>"+rsmd.getColumnName(5)+"</th>");
+   out.println("<th>"+rsmd.getColumnName(6)+"</th>");
+   out.println("<th>"+rsmd.getColumnName(7)+"</th>");
+   out.println("<th>"+rsmd.getColumnName(8)+"</th>");
+   
+   while(rs.next())
+   {
+      out.println("<tr>");
+      out.println("<td>"+rs.getString("Name")+"</td>");
+      out.println("<td>"+rs.getString("Sex")+"</td>");
+      out.println("<td>"+rs.getString("Address")+"</td>");
+      out.println("<td>"+rs.getString("Tell_num")+"</td>");
+      out.println("<td>"+rs.getString("Job")+"</td>");
+      out.println("<td>"+rs.getDate("Birth")+"</td>");
+      out.println("</tr>");
+   }
+   out.println("</table>");   
+   out.println("<br></br>" + "이름:    " + "<input type = 'text' name = 'name'>");
+   out.println("<br></br>" + "성별:    " + "<select name = 'sex'><option value='' selected>선택하세요</option> <option value = 'M' selected>남</option> <option value = 'F' selected>여</option></select>");
+   out.println("<br></br>" + "주소:    " + "<input type = 'text' name = 'address'>");
+   out.println("<br></br>" + "전화번호: " + "010 - <input type = 'text' name = 'former_tell' maxlength = '4' onKeyup='this.value=this.value.replace(/[^0-9]/g,'');'> - <input type = 'text' name = 'latter_tell' maxlength = '4' onKeyup='this.value=this.value.replace(/[^0-9]/g,'');'<br>");
+   out.println("<br></br>" + "직업:    " + "<input type = 'text' name = 'job'>");
+   %>
+   
+   <script>
+   function changeinfo(){
+	   <%
+	   String[] sql = new String[] {"UPDATE ACCOUNT SET NAME = " + "'" + request.getParameter("name") + "'" + "where id = " + "'" + /*session.getAttribute("ID")*/ "knu" + "'", 
+	                                  "",
+	                                  ""};
+	   pstmt = conn.prepareStatement(sql[0]);
+	   rs = pstmt.executeQuery();
+	   out.println("<table border=\"1\">");
+	   rsmd = rs.getMetaData();
+	   %>
+	   
+	   
+   }
+   </script>
+   
+   <br><input type = 'button' value = '수정' onclick = changeinfo()>
+   <input type = 'button' value = '취소' onclick='history.back();'>
+   
+   
+
+</body>
+</html>
