@@ -15,98 +15,19 @@
             border:1px solid skyblue
         }
         
-        #title{
+        .title{
             background-color:skyblue
         }
    </style>
  
     <script type="text/javascript">
     
-        // 회원가입 화면의 입력값들을 검사한다.
-        function checkValue()
-        {
-            var form = document.userInfo;
-        
-            if(!form.id.value){
-                alert("아이디를 입력하세요.");
-                return false;
-            }
-            
-            if(form.idDuplication.value != "idCheck"){
-                alert("아이디 중복체크를 해주세요.");
-                return false;
-            }
-            
-            if(!form.password.value){
-                alert("비밀번호를 입력하세요.");
-                return false;
-            }
-            
-            // 비밀번호와 비밀번호 확인에 입력된 값이 동일한지 확인
-            if(form.password.value != form.passwordcheck.value ){
-                alert("비밀번호를 동일하게 입력하세요.");
-                return false;
-            }    
-            
-            if(!form.name.value){
-                alert("이름을 입력하세요.");
-                return false;
-            }
-            
-            if(!form.birthyy.value){
-                alert("년도를 입력하세요.");
-                return false;
-            }
-            
-            if(isNaN(form.birthyy.value)){
-                alert("년도는 숫자만 입력가능합니다.");
-                return false;
-            }
-            
-            if(form.birthmm.value == "00"){
-                alert("월을 선택하세요.");
-                return false;
-            }
-            
-            if(!form.birthdd.value){
-                alert("날짜를 입력하세요.");
-                return false;
-            }
-            
-            if(isNaN(form.birthdd.value)){
-                alert("날짜는 숫자만 입력가능합니다.");
-                return false;
-            }
-            
-            if(!form.phone.value){
-                alert("전화번호를 입력하세요.");
-                return false;
-            }
-            
-            if(isNaN(form.phone.value)){
-                alert("전화번호는 - 제외한 숫자만 입력해주세요.");
-                return false;
-            }
-            
-            if(!form.address.value){
-                alert("주소를 입력하세요.");
-                return false;
-            }
-        }
         
         // 취소 버튼 클릭시 첫화면으로 이동
         function goFirstForm() {
-            location.href="MainForm.do";
+            location.href="../login/login.html";
         }    
         
-        // 아이디 중복체크 화면open
-        function openIdChk(){
-        
-            window.name = "parentForm";
-            window.open("IDcheck.jsp",
-                    "chkForm", "width=500, height=300, resizable = no, scrollbars = no");    
-        }
- 
         // 아이디 입력창에 값 입력시 hidden에 idUncheck를 세팅한다.
         // 이렇게 하는 이유는 중복체크 후 다시 아이디 창이 새로운 아이디를 입력했을 때
         // 다시 중복체크를 하도록 한다.
@@ -115,6 +36,61 @@
         }
         
    </script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#id").change(function(){
+          callAjax();
+      });
+    });
+
+    function callAjax(){
+        $.ajax({
+	        type: "post",
+	        url : "./id_check.jsp",
+	        data: {
+       			id:  $('#id').val()
+	        },
+	        success: whenSuccess,
+	        error: whenError
+     	});
+    }
+    
+    function whenSuccess(resdata){	//ajax return 성공후
+        $("#ajaxReturn").html(resdata);
+        console.log(resdata);
+    }
+
+    function whenError(){
+        alert("Error");
+    }
+
+  </script>
+    
+   <script>
+    function check_pwd() {
+    	var org = document.getElementById("password").value;
+    	var cmp = document.getElementById("passwordcheck").value;
+    	var txt = document.getElementById("pwd_confirm");
+
+    	if(org == cmp) {
+    		txt.innerHTML = "비밀번호가 일치합니다.";
+    		txt.style.color = "lime";
+    	}
+    	else{
+    		txt.innerHTML = "비밀번호가 일치하지 않습니다.";
+    		txt.style.color = "red";
+    	}
+    }
+    </script>
+    
+    <script>
+    function goFirstForm() {
+    	location.replace("../login/login.html")
+    }
+    </script>
     
 </head>
 <body>
@@ -123,80 +99,62 @@
         <br><br><br>
         
         
-        <!-- 입력한 값을 전송하기 위해 form 태그를 사용한다 -->
-        <!-- 값(파라미터) 전송은 POST 방식, 전송할 페이지는 JoinPro.jsp -->
-        <form method="post" action="MemberJoinAction.do" 
-                name="userInfo" onsubmit="return checkValue()">
+        <form method="post" action="makeAccount.jsp" 
+                name="userInfo" >
             <table>
                 <tr>
-                    <td id="title">아이디</td>
+                    <td class="title">아이디</td>
                     <td>
-                        <input type="text" name="id" maxlength="20" onkeydown="inputIdChk()">
-                        <input type="button" value="중복확인" onclick="openIdChk()">    
-                        <input type="hidden" name="idDuplication" value="idUncheck" >
+                        <input type="text" id="id" name="id" maxlength="20" onChange="callAjax();" >
+                        <a id="ajaxReturn"></a>
                     </td>
                 </tr>
                         
                 <tr>
-                    <td id="title">비밀번호</td>
+                    <td class="title">비밀번호</td>
                     <td>
-                        <input type="password" name="password" maxlength="20">
+                        <input type="password" name="password" id="password" maxlength="20">
                     </td>
                 </tr>
                 
                 <tr>
-                    <td id="title">비밀번호 확인</td>
+                    <td class="title">비밀번호 확인</td>
                     <td>
-                        <input type="password" name="passwordcheck" maxlength="20">
+                        <input type="password" name="passwordcheck" id="passwordcheck" maxlength="20" onKeyup="check_pwd();">
+                        <a id="pwd_confirm"></a>
                     </td>
                 </tr>
                     
                 <tr>
-                    <td id="title">이름</td>
+                    <td class="title">이름</td>
                     <td>
                         <input type="text" name="name" maxlength="20">
                     </td>
                 </tr>
                     
                 <tr>
-                    <td id="title">성별</td>
+                    <td class="title">성별</td>
                     <td>
-                        <input type="radio" name="gender" value="남" checked>남
-                        <input type="radio" name="gender" value="여" >여
+                        <input type="radio" name="gender" value="F" checked>남
+                        <input type="radio" name="gender" value="M" >여
                     </td>
                 </tr>
                 <tr>
-                    <td id="title">주소</td>
+                    <td class="title">주소</td>
                     <td>
                         <input type="text" size="30" name="address"/>
                     </td>
                 </tr>
                 <tr>
-                    <td id="title">생일</td>
+                    <td class="title">생일</td>
                     <td>
-                        <input type="text" name="birthyy" maxlength="4" placeholder="년(4자)" size="6">
-                        <select name="birthmm">
-                            <option value="00">월</option>
-                            <option value="01" >1</option>
-                            <option value="02" >2</option>
-                            <option value="03" >3</option>
-                            <option value="04" >4</option>
-                            <option value="05" >5</option>
-                            <option value="06" >6</option>
-                            <option value="07" >7</option>
-                            <option value="08" >8</option>
-                            <option value="09" >9</option>
-                            <option value="10" >10</option>
-                            <option value="11" >11</option>
-                            <option value="12" >12</option>
-                        </select>
-                        <input type="text" name="birthdd" maxlength="2" placeholder="일" size="4">
+                    	<input type="date" name="birthday" value="xxx" min="yyy" max="zzz">
                     </td>
                 </tr>
                    
                     
                 <tr>
-                    <td id="title">휴대전화</td>
+                    <td class="title">휴대전화</td>
                     <td>
                     <select name="phone1">
                             <option value="010">010</option>
@@ -210,12 +168,12 @@
                             <option value="018" >018</option>
                             <option value="019" >019</option>
                         </select>
-                        - <input type="text" name="phone2" maxlength="4"/>
-                        - <input type="text" name="phone3" maxlength="4"/>
+                        - <input type="text" name="phone2" style="width:40px" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        - <input type="text" name="phone3" style="width:40px" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </td>
                 </tr>
                <tr>
-                    <td id="title">직업</td>
+                    <td class="title">직업</td>
                     <td>
                         <input type="text" size="20" name="job"/>
                     </td>
@@ -227,5 +185,6 @@
         </form>
  
 </body>
+
 </html>
 
