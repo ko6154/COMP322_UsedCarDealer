@@ -21,7 +21,7 @@
 		Class.forName("oracle.jdbc.driver.OracleDriver");
 		conn = DriverManager.getConnection(url, user, pass);
 
-		String query = "SELECT password FROM ACCOUNT WHERE ID = '" + /*session.getAttribute("ID")*/ "knu" + "'";
+		String query = "SELECT password FROM ACCOUNT WHERE ID = '" + session.getAttribute("ID") /*"knu"*/ + "'";
 		pstmt = conn.prepareStatement(query);
 		rs = pstmt.executeQuery();
 		rs.next();

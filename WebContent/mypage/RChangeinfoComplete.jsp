@@ -52,35 +52,35 @@
 			/*이름 업데이트*/
 			if (name != "") {
 				sql = "UPDATE ACCOUNT SET NAME = " + "'" + name + "'" + "where id = " + "'"
-						+ /*session.getAttribute("ID")*/ "knu" + "'";
+						+ session.getAttribute("ID") /*"knu"*/ + "'";
 				pstmt = conn.prepareStatement(sql);
 				res = pstmt.executeUpdate(sql);
 			}
 			if (ftell != "" && ltell != "") {
 				String tellnum = "010-" + ftell + "-" + ltell;
 				sql = "UPDATE ACCOUNT SET Tell_num = " + "'" + tellnum + "'" + "where id = " + "'"
-						+ /*session.getAttribute("ID")*/ "knu" + "'";
+						+ session.getAttribute("ID") /*"knu"*/ + "'";
 				pstmt = conn.prepareStatement(sql);
 				res = pstmt.executeUpdate(sql);
 			}
 
 			if (address != "") {
 				sql = "UPDATE ACCOUNT SET address = " + "'" + address + "'" + "where id = " + "'"
-						+ /*session.getAttribute("ID")*/ "knu" + "'";
+						+ session.getAttribute("ID") /*"knu"*/ + "'";
 				pstmt = conn.prepareStatement(sql);
 				res = pstmt.executeUpdate(sql);
 			}
 
 			if (sex != "") {
 				sql = "UPDATE ACCOUNT SET sex = " + "'" + sex + "'" + "where id = " + "'"
-						+ /*session.getAttribute("ID")*/ "knu" + "'";
+						+ session.getAttribute("ID") /*"knu"*/ + "'";
 				pstmt = conn.prepareStatement(sql);
 				res = pstmt.executeUpdate(sql);
 			}
 			
 			if (job != "") {
 				sql = "UPDATE ACCOUNT SET job = " + "'" + job + "'" + "where id = " + "'"
-						+ /*session.getAttribute("ID")*/ "knu" + "'";
+						+ session.getAttribute("ID") /*"knu"*/ + "'";
 				pstmt = conn.prepareStatement(sql);
 				res = pstmt.executeUpdate(sql);
 			}

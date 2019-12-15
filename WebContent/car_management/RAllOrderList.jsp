@@ -6,6 +6,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>거래내역</title>
+<%@ page import="View.Search" %>
 </head>
 <body>
 	<%
