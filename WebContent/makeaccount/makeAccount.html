@@ -27,13 +27,7 @@
         function goFirstForm() {
             location.href="../login/login.html";
         }    
-        
-        // 아이디 입력창에 값 입력시 hidden에 idUncheck를 세팅한다.
-        // 이렇게 하는 이유는 중복체크 후 다시 아이디 창이 새로운 아이디를 입력했을 때
-        // 다시 중복체크를 하도록 한다.
-        function inputIdChk(){
-            document.userInfo.idDuplication.value ="idUncheck";
-        }
+       
         
    </script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -67,6 +61,24 @@
         alert("Error");
     }
 
+    function tellSuccess(resdata){	//ajax return 성공후
+        $("#tellReturn").html(resdata);
+        console.log(resdata);
+    }
+    
+    function calltellAjax(){
+        $.ajax({
+	        type: "post",
+	        url : "./tell_check.jsp",
+	        data: {
+       			tell1:  $('#phone1').val(),
+       			tell2:  $('#phone2').val(),
+       			tell3:  $('#phone3').val()
+	        },
+	        success: tellSuccess,
+	        error: whenError
+     	});
+    }
   </script>
     
    <script>
@@ -135,8 +147,8 @@
                 <tr>
                     <td class="title">성별</td>
                     <td>
-                        <input type="radio" name="gender" value="F" checked>남
-                        <input type="radio" name="gender" value="M" >여
+                        <input type="radio" name="gender" value="M" checked>남
+                        <input type="radio" name="gender" value="F" >여
                     </td>
                 </tr>
                 <tr>
@@ -156,7 +168,7 @@
                 <tr>
                     <td class="title">휴대전화</td>
                     <td>
-                    <select name="phone1">
+                    <select id="phone1" name="phone1">
                             <option value="010">010</option>
                             <option value="011" >011</option>
                             <option value="012" >012</option>
@@ -168,8 +180,10 @@
                             <option value="018" >018</option>
                             <option value="019" >019</option>
                         </select>
-                        - <input type="text" name="phone2" style="width:40px" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-                        - <input type="text" name="phone3" style="width:40px" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        - <input type="text" id="phone2" name="phone2" style="width:40px" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        - <input type="text" id="phone3" name="phone3" style="width:40px" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        <input type="button" value="확인" onclick="calltellAjax()">
+                        <a id="tellReturn"></a>
                     </td>
                 </tr>
                <tr>

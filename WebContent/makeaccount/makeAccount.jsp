@@ -23,16 +23,18 @@
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 	conn = DriverManager.getConnection(url,user,pass);  
 	
+	int error = 0; 				// 입력에 대한 문제가 없는 경우
+	
 	String sql = "INSERT INTO ACCOUNT VALUES ('";
 	
 	String name = request.getParameter("name"); 
-    if(name == null)
+    if(name == "")
     {
     	name = "";
     }
     
     String address = request.getParameter("address");
-    if(address == null)
+    if(address == "")
     {
     	address = "";
     }
@@ -50,7 +52,7 @@
     String tell1 = request.getParameter("phone1");
     String tell2 = request.getParameter("phone2");
     String tell3 = request.getParameter("phone3");
-    if(tell2 == null || tell3 == null)
+    if(tell2 == "" || tell3 == "")
     {
     	tell1 = "";
     }
@@ -60,7 +62,7 @@
     }
     
     String job = request.getParameter("job");
-    if(job == null)
+    if(job == "")
     {
     	job = "";
     }
@@ -70,16 +72,35 @@
 			+ ",'" + tell1 + "','" + job + "','C')";
 	System.out.println(sql);
 	int n = 0;
-	try {
-		pstmt = conn.prepareStatement(sql);
-		n = pstmt.executeUpdate();
-		//conn.commit();
-		if(pstmt!=null) pstmt.close();
-		if(conn!=null) conn.close();
-
-	} catch (Exception e) {
-		System.out.println(e.getMessage());
-	}
+	%>
+	<script>
+	<%if(name == "")
+	   {
+	      error++;
+	   %>
+	      alert('이름을 입력해주십시오.');
+	      history.back();
+	   <%}
+	   else if(tell1 == "")
+	   {  
+	      error++;
+	      %>
+	      alert('전화번호를 입력해주십시오.');
+	      history.back();
+	   <%}%>
+	</script>
+	<%	
+	if(error == 0)
+		try {
+			pstmt = conn.prepareStatement(sql);
+			n = pstmt.executeUpdate();
+			//conn.commit();
+			if(pstmt!=null) pstmt.close();
+			if(conn!=null) conn.close();
+	
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	%>
 	<script>
 	if(<%=n%> > 0) {
