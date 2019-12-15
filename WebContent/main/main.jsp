@@ -31,8 +31,10 @@
 	    document.getElementById(before_MKchange).style.display = "none";
 	    before_MKchange = deepCopy(changed_MID);
 	    
-	    if (on == 2)
+	    if (on == 2){
 	    	change_dm();
+	    	on = 1;
+	    }
 	    
 	}
 	
@@ -53,11 +55,12 @@
 	   	if(before_MDchange == "null"){
 	   		location.replace("../search/search.jsp?maker="+before_MKchange);	
 	    }
-	    
+	    /*
 	   	else if (on == 1){
 	   		location.href("../search/search.jsp?maker="+before_MKchange+"&model="+before_MDchange);
 		}
-		else if(on == 2){
+	   	*/
+		else{
 			var langSelect = document.getElementById("DM"+before_MDchange);
 		    var DMID = langSelect.options[langSelect.selectedIndex].value;
 		    location.href("../search/search.jsp?maker="+before_MKchange+"&model="+before_MDchange+"&d_model="+DMID);
@@ -108,6 +111,7 @@
 		out.println(detail);
 	}
 	out.println("<input type = \"submit\" value = \"검색\">");
+	out.println("<input type = \"reset\" value = \"초기화\">");
 	out.println("</form>");
 	
 %>

@@ -26,7 +26,6 @@
 			out.println(output);
 			out.println("</tr>");
 		}
-			
 	}
 	
 	else if(d_model == null){

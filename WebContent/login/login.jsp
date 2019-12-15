@@ -11,8 +11,8 @@
 <body>
 <%
 	String serverIP = "localhost";
-	String strSID = "orcl";
-	String portNum = "1521";
+	String strSID = "xe";
+	String portNum = "1600";
 	String user = "knu";
 	String pass = "comp322";
 	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
@@ -48,9 +48,9 @@
 		out.println("<script>alert(\"정확하지 않은 입력입니다.\"); history.back();</script>");
 		
 	} else { // valid 할 경우 그대로 놔두면 로그인 while문 을 종료함
-		out.println("<script>alert(\"로그인 성공.\"); location.replace(\"../main/main.jsp\")</script>");
 		session.setAttribute("ID", request.getParameter("ID"));
 		session.setAttribute("AUTH", auth);
+		out.println("<script>alert(\"로그인 성공.\"); location.replace(\"../main/main.jsp\")</script>");
 	}
 	
 	

@@ -268,15 +268,17 @@ public class Search {
 		String sql = "";
 
 		// 모델 세부사항 확인
-		sql = "select vehicle.vid, color_name, CC, TNAME, MODEL_YEAR, MILEAGE from post, vehicle, transmission, color, seems where post.pid = '"
+		sql = "select vehicle.vid, color_name, CC, TNAME, MODEL_YEAR, MILEAGE, fname from post, vehicle, transmission, color, seems, fuse, fuel where post.pid = '"
 				+ PID
-				+ "' AND post.vid = vehicle.vid AND vehicle.tid = transmission.tid AND seems.vid = vehicle.vid AND seems.color_id = color.color_id";
+				+ "' AND post.vid = vehicle.vid AND vehicle.tid = transmission.tid AND seems.vid = vehicle.vid AND seems.color_id = color.color_id and fuse.vid = vehicle.vid and fuse.fid = fuel.fid";
 
 		try {
 			rs = stmt.executeQuery(sql);
 			String output = "";
-			String colors = "";
+			ArrayList<String> colors = new ArrayList<>();
+			ArrayList<String> fuels = new ArrayList<>();
 			String output2 = "";
+			
 			while (rs.next()) {
 
 				String vid = rs.getString(1);
@@ -285,13 +287,18 @@ public class Search {
 				String Tname = rs.getString(4);
 				String MODEL_YEAR = rs.getString(5).substring(0, 10);
 				String MILEAGE = rs.getString(6);
-
+				String fuel = rs.getString(7);
+				
 				output = "<td>"+ vid + "</td>";
 				output2 = "<td>" + CC + "</td><td>" + Tname + "</td><td>" + MODEL_YEAR + "</td><td>" + MILEAGE;
-				colors = "<td>" + colors + color + "</td>";
+				if(!colors.contains(color) )
+					colors.add(color);
 
+				if(!fuels.contains(fuel))
+					fuels.add(fuel);
 			}
-			SResult.add(output + colors + output2);
+			
+			SResult.add(output + "<td>"+colors.toString()+"</td>" + "<td>"+ fuels.toString() +"</td>" + output2);
 			rs.close();
 			
 		} catch (SQLException ex2) {
@@ -336,7 +343,7 @@ public class Search {
 		sql = "select cname from category";
 
 		rs = stmt.executeQuery(sql);
-		SResult.add("<select name = 'category'><option disabled selected value value = ''> -- select an option -- </option>");
+		SResult.add("<select name = 'category'><option value = ''> -- select an option -- </option>");
 		while (rs.next())
 			SResult.add("<option value = \"" + rs.getString(1) +"\">"+rs.getString(1) + "</option>");
 
@@ -346,7 +353,7 @@ public class Search {
 		sql = "select distinct color_name from color";
 
 		rs = stmt.executeQuery(sql);
-		SResult.add("<select name = 'color'><option disabled selected value value = ''> -- select an option -- </option>");
+		SResult.add("<select name = 'color' multiple><option value = ''> -- select an option -- </option>");
 		while (rs.next())
 			SResult.add("<option value = \"" + rs.getString(1) +"\">"+rs.getString(1) + "</option>");
 
@@ -356,7 +363,7 @@ public class Search {
 		sql = "select fname from fuel";
 
 		rs = stmt.executeQuery(sql);
-		SResult.add("<select name = 'fuel'><option disabled selected value value = ''> -- select an option -- </option>");
+		SResult.add("<select name = 'fuel' multiple><option value = ''> -- select an option -- </option>");
 		while (rs.next())
 			SResult.add("<option value = \"" + rs.getString(1) +"\">"+rs.getString(1) + "</option>");
 
@@ -366,7 +373,7 @@ public class Search {
 		sql = "select tname from transmission";
 
 		rs = stmt.executeQuery(sql);
-		SResult.add("<select name = 'transmission'><option disabled selected value value = ''> -- select an option -- </option>");
+		SResult.add("<select name = 'transmission'><option value = ''> -- select an option -- </option>");
 		while (rs.next())
 			SResult.add("<option value = \"" + rs.getString(1) +"\">"+rs.getString(1) + "</option>");
 
@@ -376,7 +383,7 @@ public class Search {
 		sql = "select cc from engine_displacement";
 
 		rs = stmt.executeQuery(sql);
-		SResult.add("<select name = 'engine'><option disabled selected value value = ''> -- select an option -- </option>");
+		SResult.add("<select name = 'engine'><option value = ''> -- select an option -- </option>");
 		while (rs.next())
 			SResult.add("<option value = \"" + rs.getString(1) +"\">"+rs.getString(1) + "</option>");
 
@@ -385,23 +392,45 @@ public class Search {
 		
 		return SResult;
 	}
-	public ArrayList<String> search_detail() throws SQLException {
+	public ArrayList<String> search_detail(String category, String[] colors, String[] fuels, String transmission, String engine) throws SQLException {
 		
 		String sql;
 		ResultSet rs;
 		
 		ArrayList<String> SResult = new ArrayList<>();
-		ArrayList<String> opt = new ArrayList<>();
-
 		
-
-		sql = "select distinct title, model_name, dm_name, price, U_ID, U_DATE, pid from (((((((seems join (post join vehicle on post.vid = vehicle.vid) on seems.vid = post.vid) join color on seems.color_id = color.color_id) join category on category.cid = vehicle.cid) join fuse on fuse.vid = vehicle.vid) join transmission on transmission.tid = vehicle.tid) join fuel on fuel.fid = fuse.fid) join model on model.model_id = vehicle.model_id) join detailed_model on detailed_model.dm_id = vehicle.dm_id where ";
-		for (String row : opt) {
-			sql += row + " AND ";
+		sql = "select distinct title, model_name, dm_name, price, U_ID, U_DATE, pid from (((((((seems join (post join vehicle on post.vid = vehicle.vid) on seems.vid = post.vid) join color on seems.color_id = color.color_id) join category on category.cid = vehicle.cid) join fuse on fuse.vid = vehicle.vid) join transmission on transmission.tid = vehicle.tid) join fuel on fuel.fid = fuse.fid) join model on model.model_id = vehicle.model_id) join detailed_model on detailed_model.dm_id = vehicle.dm_id where";
+		
+		if(!category.equals("")) {
+			sql += " cname = '" + category +"' AND "; 
 		}
-
+		
+		if(colors != null) {
+			sql+=" (";
+			for(String color : colors)
+				sql += " color_name = '" + color + "' OR ";
+			
+			sql = sql.substring(0, sql.length() - 3);
+			sql+=" ) AND ";
+		}
+		
+		if(fuels != null){
+			for(String fuel : fuels)
+				sql += " fname = '" + fuel + "' AND ";	
+		}
+		
+		if(!transmission.equals("")){
+			sql += " tname = '" + transmission +"' AND ";
+		}
+		
+		if(!engine.equals("")){
+			sql += " vehicle.CC = '" + engine +"' AND ";
+		}
+		
 		sql = sql.substring(0, sql.length() - 4);
-
+		if(category.equals("") & colors == null & fuels == null & transmission.equals("") & engine.equals(""))
+			sql = "select distinct title, model_name, dm_name, price, U_ID, U_DATE, pid from (((((((seems join (post join vehicle on post.vid = vehicle.vid) on seems.vid = post.vid) join color on seems.color_id = color.color_id) join category on category.cid = vehicle.cid) join fuse on fuse.vid = vehicle.vid) join transmission on transmission.tid = vehicle.tid) join fuel on fuel.fid = fuse.fid) join model on model.model_id = vehicle.model_id) join detailed_model on detailed_model.dm_id = vehicle.dm_id";
+		System.out.println(sql);
 		rs = stmt.executeQuery(sql);
 
 		int no = 1;
@@ -414,11 +443,10 @@ public class Search {
 			String U_ID = rs.getString(5);
 			String U_DATE = rs.getString(6).substring(0, 10);
 			String pid = rs.getString(7);
-
-			SResult.add(pid);
-
-			System.out.println(Integer.toString(no) + " : " + title + "\t" + MNAME + "\t" + DMNAME + "\t"
-					+ Integer.toString(price) + "\t" + U_ID + "\t" + U_DATE);
+			
+			SResult.add("<td>"+Integer.toString(no) + " : <a href = '../view/view.jsp?id=" + pid + "'>" + title + "</a></td><td>" + MNAME + "</td><td>" + DMNAME + "</td><td>"
+					+ Integer.toString(price) + "</td><td>" + U_ID + "</td><td>" + U_DATE + "</td>");
+			
 			no++;
 
 		}
