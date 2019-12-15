@@ -11,8 +11,8 @@
 <body>
 <%
 	String serverIP = "localhost";
-	String strSID = "xe";
-	String portNum = "1600";
+	String strSID = "orcl";
+	String portNum = "1521";
 	String user = "knu";
 	String pass = "comp322";
 	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;

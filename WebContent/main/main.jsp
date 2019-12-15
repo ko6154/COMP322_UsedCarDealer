@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="EUC-KR" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,7 +73,7 @@
 	out.print("<div align = 'left'>"+ ID +" 님 환영합니다." + "</div>");
 	
 	//개인정보 보여주기
-	
+	out.print("<div align = 'right'><a href = '../mypage/MyPage.html'> 마이페이지 </a></div>");
 	out.print("<div align = 'right'><a href = '../login/logout.jsp'> 로그아웃 </a></div>");
 %>
 <hr>

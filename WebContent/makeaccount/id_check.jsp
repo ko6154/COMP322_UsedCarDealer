@@ -48,7 +48,7 @@
 	  valid = "이미 존재하는 ID입니다.";}// 중복된 id가 있으면
   else{
 	  %>
-	  <a style="color:lime">
+	  </a><a style="color:lime">
 	  <%
 	  valid = "사용가능한 ID입니다.";
   }
