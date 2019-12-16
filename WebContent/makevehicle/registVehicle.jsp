@@ -36,7 +36,6 @@
 	String vsql ="INSERT INTO VEHICLE VALUES ('";		// 차량 등록을 위한 sql문
 	String csql ="INSERT INTO SEEMS VALUES ('";		// 색상 등록을 위한 sql문
 	String fsql ="INSERT INTO FUSE VALUES ('";		// 연료 등록을 위한 sql문
-	String cidsql = "SELECT CID FROM DETAILED_MODEL WHERE DM_ID = '" + detail + "'";			// cid를 받아오기 위한 sql문
 	
 	
 	if(vid == "")
@@ -104,6 +103,14 @@
 	}
 	else 
 	{
+		
+		String cidsql = "SELECT CID FROM DETAILED_MODEL WHERE DM_ID = '" + detail + "'";			// cid를 받아오기 위한 sql문
+		String dropcar = "DELETE FROM VEHICLE WHERE VID = '" + vid + "'";
+		
+		pstmt = conn.prepareStatement(dropcar);
+		pstmt.executeUpdate();
+		
+		
 		pstmt = conn.prepareStatement(cidsql);
 		rs = pstmt.executeQuery();
 		while (rs.next())

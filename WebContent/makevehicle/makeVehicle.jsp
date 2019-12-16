@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>차량등록 화면</title>
+    <title>차량등록 및 수정 화면</title>
     <meta charset="EUC-KR">
     <style type="text/css">
         table{
@@ -139,7 +139,7 @@
 </head>
 <body>
         <br><br>
-        <b><font size="6" color="gray">차량등록</font></b>
+        <b><font size="6" color="gray">차량등록 및 수정</font></b>
         <br><br><br>
         
        

@@ -45,12 +45,12 @@
 	  %>
 	  <a style="color:red">
 	  <%
-	  valid = "이미 존재하는 차량번호입니다.";}// 중복된 id가 있으면
+	  valid = "차량 정보를 수정합니다.";}// 중복된 id가 있으면
   else{
 	  %>
 	  </a><a style="color:lime">
 	  <%
-	  valid = "사용가능한 차량번호입니다.";
+	  valid = "차량 정보를 등록합니다.";
   }
   
  HashMap<String,String> map = new HashMap<String,String>();
