@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title>게시글 비공개 화면</title>
+ 
+    <style type="text/css">
+        table{
+            margin-left:auto; 
+            margin-right:auto;
+            border:3px solid skyblue;
+        }
+        
+        td{
+            border:1px solid skyblue
+        }
+        
+        .title{
+            background-color:skyblue
+        }
+   </style>
+ 
+    <script type="text/javascript">
+    
+        
+        // 취소 버튼 클릭시 첫화면으로 이동
+        function goFirstForm() {
+            location.href="../login/login.html";
+        }    
+       
+        
+   </script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#pid").change(function(){
+          callAjax();
+      });
+    });
+
+    function callAjax(){
+        $.ajax({
+	        type: "post",
+	        url : "./pid_check.jsp",
+	        data: {
+       			pid:  $('#pid').val()
+	        },
+	        success: whenSuccess,
+	        error: whenError
+     	});
+    }
+    
+    function whenSuccess(resdata){	//ajax return 성공후
+        $("#ajaxReturn").html(resdata);
+        console.log(resdata);
+    }
+
+    function whenError(){
+        alert("Error");
+    }
+
+  </script>
+    
+    
+    <script>
+    function goFirstForm() {
+    	location.replace("../login/login.html")
+    }
+    </script>
+    
+</head>
+<body>
+        <br><br>
+        <b><font size="6" color="gray">비공개 설정</font></b>
+        <br><br><br>
+        
+        
+        <form method="post" action="hidePost.jsp" 
+                name="userInfo" >
+            <table>
+                <tr>
+                    <td class="title">게시글 번호</td>
+                    <td>
+                        <input type="text" id="pid" name="pid" maxlength="8" onChange="callAjax();" >
+                        <a id="ajaxReturn" name="ajaxReturn"></a>
+                    </td>
+                </tr>
+  
+                <tr>
+                    <td class="title">공개 설정</td>
+                    <td>
+                        <input type="radio" name="valid" value="v" checked>공개
+                        <input type="radio" name="valid" value="u" >비공개
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <input type="submit" value="변경"/>  
+            <input type="button" value="취소" onclick="goFirstForm()">
+        </form>
+ 
+</body>
+
+</html>
+

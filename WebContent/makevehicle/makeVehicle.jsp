@@ -282,7 +282,7 @@
             <input id="True_DModel" name="True_DModel" style="display:none" value=""/>
             <br>
             <!--<input type="button" value="가입" onclick="updateDB()">-->  
-            <input type="submit" value="가입">  
+            <input type="submit" value="등록">  
             <input type="button" value="취소" onclick="goFirstForm()">
         </form>
 </body>
