@@ -91,6 +91,7 @@
 	</script>
 	<%	
 	if(error == 0)
+	{
 		try {
 			pstmt = conn.prepareStatement(sql);
 			n = pstmt.executeUpdate();
@@ -110,6 +111,7 @@
 		alert('회원가입에 실패했습니다.');
 		history.back();
 	}
+	<% } %>
 	</script>
 </body>
 </html>
