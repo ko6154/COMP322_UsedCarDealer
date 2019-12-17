@@ -52,10 +52,7 @@
   rs.close();
   conn.close();
 
-  System.out.println("tell1 : "+tell1);
-  System.out.println("tell2 : "+tell3);
-  System.out.println("tell3 : "+tell2);
-  System.out.println("=============");
+
   if(count != 0 || tell1.equals("")) {
 	  %>
 	  <a style="color:red">

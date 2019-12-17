@@ -70,7 +70,6 @@
 	sql = sql + request.getParameter("id") + "','" + request.getParameter("password")  + "','"+ name 
 			+ "','" + request.getParameter("gender") + "','" + address + "'," + birth 
 			+ ",'" + tell1 + "','" + job + "','C')";
-	System.out.println(sql);
 	int n = 0;
 	%>
 	<script>

@@ -37,7 +37,6 @@
 	while (rs.next()) {
 		count = rs.getInt(1);
 	}
-  //System.out.println(count);
   rs.close();
   conn.close();
 
