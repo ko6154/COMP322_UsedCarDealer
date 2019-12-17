@@ -3,13 +3,72 @@
 <head>
 <meta charset="EUC-KR">
 <title>My Page</title>
+<style type="text/css">
+        table{
+            margin-left:auto; 
+            margin-right:auto;
+            border:3px solid skyblue;
+        }
+        
+        td{
+            border:1px solid skyblue;
+            padding:20px;
+        }
+        
+        .title{
+            background-color:skyblue
+        }
+        
+        .menu {
+        	color:black;
+        	text-decoration:none;
+        	font-weight:bold;
+        	padding:20px;
+        }
+   </style>
 </head>
 <body>
+<div width="40%" name="wrapper" style="text-align:center">
+	<table>
+	<tr>
+		<td class="title">
+		<h2>내 페이지</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<a class="menu" href="RchangeInfo.jsp">정보수정</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<a class="menu" href="RchangePass.jsp">비밀번호 변경</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<a class="menu" href="RCheckOrderlist.jsp">거래내역확인</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<a class="menu" href="RWithdrawID.jsp">회원탈퇴</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<a class="menu" href="history.back()">뒤로가기</a>
+		</td>
+	</tr>
+	</table>
+</div>
+<!-- 
 <h2>내 페이지</h2>
 <input type = "button" value = "정보수정"    onclick = "location = 'RChangeInfo.jsp'"><br></br>
 <input type = "button" value = "비밀번호변경" onclick = "location = 'RChangePass.jsp'"><br></br>
 <input type = "button" value = "거래내역확인" onclick = "location = 'RCheckOrderlist.jsp'"><br></br>
 <input type = "button" value = "회원탈퇴"    onclick = "location = 'RWithdrawID.jsp'"><br></br>
 <input type = "button" value = "뒤로가기"    onclick = "history.back()"><br></br>
+-->
 </body>
 </html>

@@ -31,10 +31,8 @@
 	    document.getElementById(before_MKchange).style.display = "none";
 	    before_MKchange = deepCopy(changed_MID);
 	    
-	    if (on == 2){
+	    if (on == 2)
 	    	change_dm();
-	    	on = 1;
-	    }
 	    
 	}
 	
@@ -42,6 +40,8 @@
 		on = 2;
 	    var langSelect = document.getElementById("MD"+changed_MID);
 	    var changed_MDID = langSelect.options[langSelect.selectedIndex].value;
+	    
+	    alert(changed_MDID+"/"+before_MDchange);
 	    
 	    document.getElementById(changed_MDID).style.display = "block";
 	    document.getElementById(before_MDchange).style.display = "none";
@@ -55,12 +55,11 @@
 	   	if(before_MDchange == "null"){
 	   		location.replace("../search/search.jsp?maker="+before_MKchange);	
 	    }
-	    /*
+	    
 	   	else if (on == 1){
 	   		location.href("../search/search.jsp?maker="+before_MKchange+"&model="+before_MDchange);
 		}
-	   	*/
-		else{
+		else if(on == 2){
 			var langSelect = document.getElementById("DM"+before_MDchange);
 		    var DMID = langSelect.options[langSelect.selectedIndex].value;
 		    location.href("../search/search.jsp?maker="+before_MKchange+"&model="+before_MDchange+"&d_model="+DMID);
@@ -71,13 +70,18 @@
 </head>
 <body>
 <%
-	String ID = (String)session.getAttribute("ID"); String auth = (String)session.getAttribute("auth"); 
+	String ID = (String)session.getAttribute("ID");
+	String auth = (String)session.getAttribute("AUTH"); 
 	
 	out.print("<div align = 'left'>"+ ID +" 님 환영합니다." + "</div>");
+	
 	
 	//개인정보 보여주기
 	out.print("<div align = 'right'><a href = '../mypage/MyPage.html'> 마이페이지 </a></div>");
 	out.print("<div align = 'right'><a href = '../login/logout.jsp'> 로그아웃 </a></div>");
+	if(auth.equals("M")) {
+		out.print("<div align = 'right'><a href = '../car_management/CarManagement.html' style='color:red'> 관리자페이지 </a></div>");
+	}
 %>
 <hr>
 <div id = 'null' style = 'display:none'></div>
@@ -111,7 +115,6 @@
 		out.println(detail);
 	}
 	out.println("<input type = \"submit\" value = \"검색\">");
-	out.println("<input type = \"reset\" value = \"초기화\">");
 	out.println("</form>");
 	
 %>
