@@ -8,23 +8,16 @@
 </head>
 <body>
 <p>
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
 <%
-	String serverIP = "localhost";
-	String strSID = "orcl";
-	String portNum = "1521";
-	String user = "knu";
-	String pass = "comp322";
-	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
-	Connection conn = null;
-	Statement stmt = null;
+	Connection conn = DB.getConn();
 	
 	ResultSet rs;
 	PreparedStatement pstmt;
 	ResultSetMetaData rsmd;
-	
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	conn = DriverManager.getConnection(url,user,pass);
-
+%><%
  String vid = request.getParameter("vid");
  String valid = "";
  String sql = "SELECT count(*) FROM VEHICLE WHERE VID = '" + vid + "'";
@@ -39,7 +32,7 @@
 	}
   //System.out.println(count);
   rs.close();
-  conn.close();
+  
 
   if(count != 0) {
 	  %>

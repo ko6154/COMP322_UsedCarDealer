@@ -10,19 +10,17 @@
 </head>
 <body>
 <h2></h2>
-<%String serverIP = "localhost";
-	String strSID = "orcl";
-	String portNum = "1521";
-	String user = "knu";
-	String pass = "comp322";
-	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	Statement stmt = null;
-	ResultSet rs;
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	conn = DriverManager.getConnection(url,user,pass);  
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
+<%
+	Connection conn = DB.getConn();
 	
+	ResultSet rs;
+	PreparedStatement pstmt;
+	ResultSetMetaData rsmd;
+%>
+<%
 	int count = 0; 				// 입력에 대한 문제가 없는 경우
 	
 	String countsql = "SELECT COUNT(*) FROM POST";

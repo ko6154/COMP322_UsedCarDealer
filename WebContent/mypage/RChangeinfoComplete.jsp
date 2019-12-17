@@ -9,20 +9,17 @@
 </head>
 
 <body>
-	<%
-		String serverIP = "155.230.36.61";
-		String strSID = "orcl";
-		String portNum = "1521";
-		String user = "s2017111978";
-		String pass = "2017111978";
-		String url = "jdbc:oracle:thin:@" + serverIP + ":" + portNum + ":" + strSID;
-		Connection conn = null;
-		PreparedStatement pstmt;
-		ResultSet rs;
-		int res;
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		conn = DriverManager.getConnection(url, user, pass);
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
 
+<%
+	Connection conn = DB.getConn();
+	
+	ResultSet rs;
+	PreparedStatement pstmt;
+	ResultSetMetaData rsmd;
+%><%
+		int res;
 		String name = request.getParameter("name");
 		String ftell = request.getParameter("former_tell");
 		String ltell = request.getParameter("latter_tell");

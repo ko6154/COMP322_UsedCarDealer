@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR" import="java.util.*" import="java.text.*, java.sql.*"  %>
-<!--import JDBC package -->
+    pageEncoding="EUC-KR"%>
+    
+<%@ page language="java" import="java.text.*, java.sql.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,21 +9,15 @@
 <title>차량등록</title>
 </head>
 <body>
-<%String serverIP = "localhost";
-	String strSID = "orcl";
-	String portNum = "1521";
-	String user = "knu";
-	String pass = "comp322";
-	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	Statement stmt = null;
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
+<%
+	Connection conn = DB.getConn();
+	
 	ResultSet rs;
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	conn = DriverManager.getConnection(url,user,pass);  
-	
-	
-	
+	PreparedStatement pstmt;
+	ResultSetMetaData rsmd;
 	
 	String vid = request.getParameter("vid");
 	String maker = request.getParameter("True_Maker");
@@ -220,9 +215,7 @@
 			</script>
 			<%
 		}
-		if(pstmt!=null) pstmt.close();
-		if(conn!=null) conn.close();
-		if(rs!=null) rs.close();
+		
 	}	
 	%>
 </body>

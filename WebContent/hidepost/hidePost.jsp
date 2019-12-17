@@ -8,21 +8,18 @@
 <title>차량등록</title>
 </head>
 <body>
-<%String serverIP = "localhost";
-	String strSID = "orcl";
-	String portNum = "1521";
-	String user = "knu";
-	String pass = "comp322";
-	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	Statement stmt = null;
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
+<%
+	DB.setConn();
+	Connection conn = DB.getConn();
+	
 	ResultSet rs;
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	conn = DriverManager.getConnection(url,user,pass);  
+	PreparedStatement pstmt;
 	ResultSetMetaData rsmd;
-	
-	
+%>
+<%
 	
 	String pid = request.getParameter("pid");
 	String set = request.getParameter("valid");

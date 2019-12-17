@@ -8,19 +8,16 @@
 <title>거래내역</title>
 </head>
 <body>
-	<%
-		String serverIP = "155.230.36.61";
-		String strSID = "orcl";
-		String portNum = "1521";
-		String user = "s2017111978";
-		String pass = "2017111978";
-		String url = "jdbc:oracle:thin:@" + serverIP + ":" + portNum + ":" + strSID;
-		Connection conn = null;
-		PreparedStatement pstmt;
-		ResultSet rs;
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		conn = DriverManager.getConnection(url, user, pass);
+	<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
 
+<%
+	Connection conn = DB.getConn();
+	
+	ResultSet rs;
+	PreparedStatement pstmt;
+	
+%><%
 		String query = "select v.vid, p.title, mk.mname, md.model_name, dm.dm_name, b.sold_date from buy_car b, post p, vehicle v, detailed_model dm, model md, maker mk where b.buyer = '"
 				+ session.getAttribute("ID") /*"knu"*/
 				+ "' and b.post = p.pid and p.vid = v.vid and v.dm_id = dm.dm_id and v.model_id = md.model_id and v.mid = mk.mid order by sold_date desc";

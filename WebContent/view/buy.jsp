@@ -7,12 +7,15 @@
 <title>Insert title here</title>
 </head>
 <%@ page import="View.Search" %>
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
 <body>
 <%
 	String ID = (String)session.getAttribute("ID");
 	String pid = request.getParameter("pid");
 	
-	Search search = new Search();
+	Search search = new Search(DB.getConn());
 	System.out.println(ID);
 	System.out.println(pid);
 	if(search.Buy_Car(ID, pid))

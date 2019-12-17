@@ -24,33 +24,15 @@ public class Search {
 	private static ArrayList<String> MID = new ArrayList<>();
 	private static ArrayList<String> MODEL_ID = new ArrayList<>();
 	
-	public Search() {
+	public Search(Connection conn) {
+		this.conn = conn;
 		try {
-			// Load a JDBC driver for Oracle DBMS
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			// Get a Connection object
-			System.out.println("Success!");
-		} catch (ClassNotFoundException e) {
-			System.err.println("error = " + e.getMessage());
-			System.exit(1);
-		}
-
-		// Make a connection
-		try {
-			conn = DriverManager.getConnection(URL, USER_KNU, USER_PASSWD);
-		} catch (SQLException ex) {
-			System.err.println("Cannot get a connection: " + ex.getMessage());
-			System.exit(1);
-		}
-		try {
-			conn.setAutoCommit(false); // auto-commit disabled
-			// Create a statement object
 			stmt = conn.createStatement();
-
-		} catch (SQLException ex2) {
-			System.err.println("sql error = " + ex2.getMessage());
-			System.exit(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	public ArrayList<String> GetMaker() {

@@ -13,8 +13,11 @@
 <hr>
 <%@ page import="View.Search" %>
 <table>
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
 <%
-	Search search = new Search();
+	Search search = new Search(DB.getConn());
 
 	String model = request.getParameter("model");
 	String d_model = request.getParameter("d_model");

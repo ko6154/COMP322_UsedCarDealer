@@ -87,10 +87,12 @@
 <hr>
 <div id = 'null' style = 'display:none'></div>
 <%@ page import="View.Search" %>
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
 
 <%
 	//검색하기	
-	Search search = new Search();
+	Search search = new Search(DB.getConn());
 	out.println("<form action = \"../search/search.jsp\" method = \"GET\">");
 	out.println("<select id = 'maker' onchange='changed()'>");
 	   
@@ -111,11 +113,12 @@
 	
 	//세부사항 검색
 	
-	out.println("<form action = \"../search/detail_search.jsp\" method = \"POST\">");
+	out.println("<form action = \"../search/detdail_search.jsp\" method = \"POST\">");
 	for (String detail : search.detail_view()){
 		out.println(detail);
 	}
 	out.println("<input type = \"submit\" value = \"검색\">");
+	out.println("<input type = \"reset\" value = \"초기화\">");
 	out.println("</form>");
 	
 %>

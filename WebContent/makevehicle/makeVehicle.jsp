@@ -137,6 +137,9 @@
     </script>
     
 </head>
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
 <body>
         <br><br>
         <b><font size="6" color="gray">차량등록 및 수정</font></b>
@@ -158,7 +161,7 @@
                     <td>
                     <%
 					//검색하기	
-					Search search = new Search();
+					Search search = new Search(DB.getConn());
 					out.println("<select id = 'maker' onchange='changed()'>");
 					   
 					for (String mname : search.GetMaker() ){

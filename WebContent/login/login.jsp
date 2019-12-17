@@ -9,24 +9,17 @@
 <title>login</title>
 </head>
 <body>
+
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
 <%
-	String serverIP = "localhost";
-	String strSID = "xe";
-	String portNum = "1600";
-	String user = "knu";
-	String pass = "comp322";
-	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
-	Connection conn = null;
-	Statement stmt = null;
-	
+	DB.setConn();
+	Connection conn = DB.getConn();
 	String sql = "";
 	ResultSet rs;
 	PreparedStatement pstmt;
 	ResultSetMetaData rsmd;
-	int count;
-	
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	conn = DriverManager.getConnection(url,user,pass);
 %>
 <%
 	int valid = 0;
@@ -34,11 +27,11 @@
 	
 	sql = "SELECT count(*), auth from account where id = '" + request.getParameter("ID") + "' AND password = '" + request.getParameter("PWD")
 			+ "' group by auth";
-	//out.println(sql);
+	
 	pstmt = conn.prepareStatement(sql);
 	rs = pstmt.executeQuery();
 	rsmd = rs.getMetaData();
-
+	
 	while (rs.next()) {
 		valid = rs.getInt(1);
 		auth = rs.getString(2);

@@ -8,22 +8,17 @@
 </head>
 <body>
 <p>
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
+
 <%
-	String serverIP = "localhost";
-	String strSID = "orcl";
-	String portNum = "1521";
-	String user = "knu";
-	String pass = "comp322";
-	String url = "jdbc:oracle:thin:@"+serverIP+":"+portNum+":"+strSID;
-	Connection conn = null;
-	Statement stmt = null;
+	Connection conn = DB.getConn();
 	
 	ResultSet rs;
 	PreparedStatement pstmt;
 	ResultSetMetaData rsmd;
-	
-	Class.forName("oracle.jdbc.driver.OracleDriver");
-	conn = DriverManager.getConnection(url,user,pass);
+%>
+<%
 
  String tell1 = request.getParameter("tell1");
  String tell2 = request.getParameter("tell2");
@@ -50,7 +45,7 @@
 	}
   //System.out.println(count);
   rs.close();
-  conn.close();
+  
 
 
   if(count != 0 || tell1.equals("")) {
