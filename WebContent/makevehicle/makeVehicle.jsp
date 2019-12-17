@@ -96,6 +96,7 @@
 		//alert("MDID:"+MDID);
 		var Select3 = document.getElementById("DM"+before_MDchange);
 		temp = Select3.options[Select3.selectedIndex].value;
+		
 		DModel.value=temp;
 	}
 	
@@ -285,7 +286,7 @@
             <input id="True_DModel" name="True_DModel" style="display:none" value=""/>
             <br>
             <!--<input type="button" value="가입" onclick="updateDB()">-->  
-            <input type="submit" value="등록">  
+            <input type="submit" value="등록" onclick = "Update_True()">  
             <input type="button" value="취소" onclick="goFirstForm()">
         </form>
 </body>

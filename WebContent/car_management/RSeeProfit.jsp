@@ -18,11 +18,12 @@
 </script>
 
 <base = target="_self">
-
+<jsp:useBean id="DB" class="View.DB" scope = "application"/>
+<jsp:setProperty name = "DB" property="*"/>
 </head>
 <body>
 	<%
-		Search mklist = new Search();
+		Search mklist = new Search(DB.getConn());
 
 		out.println("<form action = \"RSeeProfitIFrame.jsp\" method = \"GET\" target = \"ListHere\">");
 		out.println("<select name = 'maker'>");

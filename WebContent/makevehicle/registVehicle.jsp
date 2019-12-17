@@ -216,7 +216,9 @@
 			<%
 		}
 		
-	}	
+	}
+	conn.commit();
 	%>
+	<script>history.back();</script>
 </body>
 </html>

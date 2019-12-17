@@ -42,15 +42,14 @@
 	String title = request.getParameter("title");
 	String day = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(date);
 	
-
-
 	
 	String sql = "INSERT INTO POST VALUES ('PO100" + countS + "','" + vid + "','" 
 	+ title + "','knu',TO_DATE('"+ day +"','YYYY-MM-DD'),'v')";
-	
+	System.out.println(sql);
 	try{
 	pstmt = conn.prepareStatement(sql);
 	pstmt.executeUpdate();
+	conn.commit();
 	%>
 	<script>
 	alert('게시글 등록에 성공하였습니다.');
