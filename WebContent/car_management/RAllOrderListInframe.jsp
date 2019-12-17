@@ -9,11 +9,11 @@
 </head>
 <body>
 	<%
-		String serverIP = "localhost";
-		String strSID = "xe";
-		String portNum = "1600";
-		String user = "knu";
-		String pass = "comp322";
+		String serverIP = "155.230.36.61";
+		String strSID = "orcl";
+		String portNum = "1521";
+		String user = "s2017111978";
+		String pass = "2017111978";
 		String url = "jdbc:oracle:thin:@" + serverIP + ":" + portNum + ":" + strSID;
 		Connection conn = null;
 		PreparedStatement pstmt;
@@ -26,7 +26,7 @@
 		if (request.getParameter("maker").equals("every")) {
 			maker = " ";
 		} else {
-			maker = "mk.mname = '" + request.getParameter("maker") + "' and ";
+			maker = "mk.mid = '" + request.getParameter("maker") + "' and ";
 		}
 		System.out.println(maker);
 
@@ -37,7 +37,7 @@
 		}
 		System.out.println(year);
 
-		if (request.getParameter("year").equals("every")) {
+		if (request.getParameter("month").equals("every")) {
 			month = " ";
 		} else {
 			month = "EXTRACT(month FROM (b.Sold_date)) = '" + request.getParameter("month") + "' and ";
@@ -73,7 +73,6 @@
 	%>
 	<br>
 	<br>
-	<input type='button' value='뒤로가기' onclick='history.back();'>
 
 </body>
 </html>

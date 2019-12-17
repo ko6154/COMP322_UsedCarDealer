@@ -56,11 +56,12 @@
 	%>
 
 	<input type='submit' value='검색'></input>
+	<input type='button' value='뒤로가기' onclick='location = "CarManagement.html"'>
 	</form>
 	<br>
 	<br>
 
-	<iframe width="600" height="300" scrolling="yes" id="ListHere"></iframe>
+	<iframe src = "" width="600" height="300" scrolling="yes" name ="ListHere"></iframe>
 
 
 
