@@ -22,7 +22,6 @@
 	}
 
 	function changed(){
-		on = 1;
 	    var langSelect = document.getElementById("maker");
 	    
 	    changed_MID = langSelect.options[langSelect.selectedIndex].value;
@@ -32,8 +31,10 @@
 	    before_MKchange = deepCopy(changed_MID);
 	    
 	    if (on == 2)
+	   {
 	    	change_dm();
-	    
+	    	on = 1;
+	   }
 	}
 	
 	function change_dm(){
