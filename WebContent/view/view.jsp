@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>차량 검색</title>
 </head>
 <body>
 <%@ page import="View.Search" %>
@@ -13,7 +13,7 @@
 
 <table>
 <img src = 'img.png' width='50%' height='50%'></img>
-<tr><td>차량 번호</td> <td>색상 </td> <td>배기량</td> <td>변속기</td> <td>연식</td> <td>주행거리</td></tr>
+<tr><td>차량 번호</td> <td>색상 </td> <td>연료</td> <td>배기량</td> <td>변속기</td> <td>연식</td> <td>주행거리</td></tr>
 <%
 	//검색하기	
 	Search search = new Search(DB.getConn());
@@ -31,6 +31,7 @@
 out.println("<form action='buy.jsp' method = 'GET'> <input type = 'hidden' name = 'pid' value = '"+ request.getParameter("id")+"'>");
 %>
 <input type = 'submit' value = '구매'>
+<input type='button' value='뒤로가기' onclick='history.back();'>
 </form>
 </body>
 </html>

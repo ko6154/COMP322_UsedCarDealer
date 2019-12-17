@@ -219,6 +219,6 @@
 	}
 	conn.commit();
 	%>
-	<script>history.back();</script>
+	<script>location.href = "../car_management/CarManagement.html"</script>
 </body>
 </html>

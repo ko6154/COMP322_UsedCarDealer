@@ -287,7 +287,7 @@
             <br>
             <!--<input type="button" value="가입" onclick="updateDB()">-->  
             <input type="submit" value="등록" onclick = "Update_True()">  
-            <input type="button" value="취소" onclick="goFirstForm()">
+            <input type='button' value='취소' onclick='location = "../car_management/CarManagement.html"'>
         </form>
 </body>
 

@@ -42,7 +42,6 @@
 	    var langSelect = document.getElementById("MD"+changed_MID);
 	    var changed_MDID = langSelect.options[langSelect.selectedIndex].value;
 	    
-	    alert(changed_MDID+"/"+before_MDchange);
 	    
 	    document.getElementById(changed_MDID).style.display = "block";
 	    document.getElementById(before_MDchange).style.display = "none";
@@ -75,6 +74,9 @@
 	String auth = (String)session.getAttribute("AUTH"); 
 	
 	out.print("<div align = 'left'>"+ ID +" 님 환영합니다." + "</div>");
+	
+	//차량추천하겠습니다.
+	out.print("<iframe src = 'WhatAboutThisCar.jsp' width='600' height='150' scrolling='yes' name ='ListHere'></iframe>");
 	
 	
 	//개인정보 보여주기
@@ -113,7 +115,7 @@
 	
 	//세부사항 검색
 	
-	out.println("<form action = \"../search/detdail_search.jsp\" method = \"POST\">");
+	out.println("<form action = \"../search/detail_search.jsp\" method = \"POST\">");
 	for (String detail : search.detail_view()){
 		out.println(detail);
 	}
