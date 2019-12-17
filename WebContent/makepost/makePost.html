@@ -1,0 +1,121 @@
+
+
+<html>
+<head>
+    <title>게시글 등록</title>
+ 
+    <style type="text/css">
+        table{
+            margin-left:auto; 
+            margin-right:auto;
+            border:3px solid skyblue;
+        }
+        
+        td{
+            border:1px solid skyblue
+        }
+        
+        .title{
+            background-color:skyblue
+        }
+   </style>
+ 
+    <script type="text/javascript">
+    
+        
+        // 취소 버튼 클릭시 첫화면으로 이동
+        function goFirstForm() {
+            location.href="../car_management/CarManagement.html";
+        }    
+       
+        
+   </script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#vid").change(function(){
+          callAjax();
+      });
+    });
+
+    function callAjax(){
+        $.ajax({
+	        type: "post",
+	        url : "./vid_check.jsp",
+	        data: {
+       			vid:  $('#vid').val()
+	        },
+	        success: whenSuccess,
+	        error: whenError
+     	});
+    }
+    
+    function whenSuccess(resdata){	//ajax return 성공후
+        $("#ajaxReturn").html(resdata);
+        console.log(resdata);
+    }
+
+    function whenError(){
+        alert("Error");
+    }
+
+    function pidSuccess(resdata){	//ajax return 성공후
+    	
+        $("#pidReturn").html(resdata);
+        console.log(resdata);
+    }
+    
+    function callpidAjax(){
+        $.ajax({
+	        type: "post",
+	        url : "../hidepost/pid_check.jsp",
+	        data: {
+       			pid:  $('#pid').val(),
+	        },
+	        success: tellSuccess,
+	        error: whenError
+     	});
+    }
+  </script>
+    <script>
+    function goFirstForm() {
+    	location.replace("../car_management/CarManagement.html")
+    }
+    </script>
+    
+</head>
+<body>
+        <br><br>
+        <b><font size="6" color="gray">게시글 등록</font></b>
+        <br><br><br>
+        
+        
+        <form method="post" action="makePost.jsp" 
+                name="userInfo" >
+            <table>
+                <tr>
+                    <td class="title">차량번호</td>
+                    <td>
+                        <input type="text" id="vid" name="vid" maxlength="8" onChange="callAjax();" >
+                        <a id="ajaxReturn"></a>
+                    </td>
+                </tr>
+                        
+                <tr>
+                    <td class="title">제목</td>
+                    <td>
+                        <input type="text" name="title" id="title" maxlength="20">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <input type="submit" value="가입"/>  
+            <input type="button" value="취소" onclick="goFirstForm()">
+        </form>
+ 
+</body>
+
+</html>
+
